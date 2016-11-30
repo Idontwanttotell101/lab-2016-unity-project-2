@@ -15,7 +15,7 @@ public class blink : MonoBehaviour
     void Update()
     {
         var c = renderer.material.color;
-        c.a = Mathf.Sin(Time.time);// / 3 + 0.5f;
+        c.a = Mathf.Sin(Time.time) / 3 + 0.5f;
         renderer.material.color = c;
     }
 }
