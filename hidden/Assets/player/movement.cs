@@ -7,6 +7,7 @@ public class movement : MonoBehaviour {
 	Vector3 move;
 	int floorMask;
 	float camRayLength = 500f;
+    public bool grounded = true;
 
 
 	void Awake ()
@@ -26,6 +27,7 @@ public class movement : MonoBehaviour {
 		float v = Input.GetAxis ("Vertical");
 		Move (h, v);
 		Turning ();
+        Jump ();
 		//Animating (h, v);
 
 	}
@@ -41,6 +43,14 @@ public class movement : MonoBehaviour {
 		// Move the player to it's current position plus the movement.
 		rb.MovePosition (transform.position + move);
 	}
+
+    void Jump()
+    {
+        if (Input.GetButton("Jump") && grounded) {
+            rb.AddForce(0, 250, 0);
+            grounded = false;
+        }
+    }
 
 	void Turning ()
 	{
