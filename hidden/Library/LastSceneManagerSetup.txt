@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/nav.unity
+- path: Assets/player/faceDir.unity
   isLoaded: 1
   isActive: 1
