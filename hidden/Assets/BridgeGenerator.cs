@@ -21,12 +21,21 @@ public class BridgeGenerator : MonoBehaviour
             var distance = offset.magnitude;
             var count = Mathf.FloorToInt(distance);
 
+            var bridge = new GameObject("bridge", typeof(OffMeshLink));
+            bridge.transform.parent = this.transform;
             for (int i = 0; i <= count; ++i)
             {
                 var point = begin + offset * i / count;
-                Instantiate(BridgeUnit, point, Quaternion.identity);
+                var gameobj = Instantiate(BridgeUnit, point, Quaternion.identity) as GameObject;
+                gameobj.transform.parent = bridge.transform;
             }
-            Active = false;
+
+            var link = bridge.GetComponent<OffMeshLink>();
+            link.startTransform = bridge.transform.GetChild(0);
+            link.endTransform = bridge.transform.GetChild(count);
+            link.UpdatePositions();
+
+            this.Active = false;
         }
     }
 }
