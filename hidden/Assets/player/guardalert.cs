@@ -3,7 +3,6 @@ using System.Collections;
 
 public class guardalert : MonoBehaviour
 {
-
     public GameObject Player;
     public float minPlayerDetectDistance;
     public float fieldOfViewRange;
