@@ -14,6 +14,7 @@ public class PlayerDetector : MonoBehaviour
     public string PlayerTag = "Player";
     public const string PlayerEnterMessage = "OnPlayerEnter";
     public const string PlayerLeaveMessage = "OnPlayerExit";
+    public const string PlayerStayMessage = "OnPlayerStay";
     public bool UseRoot = false;
     //public bool BroadcastPlayerEvent = false;
 
@@ -28,6 +29,8 @@ public class PlayerDetector : MonoBehaviour
         if (!IsPlayer(c))
             return;
         PlayerDetected.Invoke();
+        //StartCoroutine("PlayerStayCaster",c); doesn't work...?
+        StartCoroutine(PlayerStayCaster(c));
         SendMessage(PlayerEnterMessage, c, SendMessageOptions.DontRequireReceiver);
     }
 
@@ -36,6 +39,17 @@ public class PlayerDetector : MonoBehaviour
         if (!IsPlayer(c))
             return;
         PlayerLeave.Invoke();
+        // StopCoroutine("PlayerStayCaster");
+        StopAllCoroutines();
         SendMessage(PlayerLeaveMessage, c, SendMessageOptions.DontRequireReceiver);
+    }
+
+    IEnumerator PlayerStayCaster(Collider player)
+    {
+        while (true)
+        {
+            SendMessage(PlayerStayMessage, player, SendMessageOptions.DontRequireReceiver);
+            yield return null;
+        }
     }
 }

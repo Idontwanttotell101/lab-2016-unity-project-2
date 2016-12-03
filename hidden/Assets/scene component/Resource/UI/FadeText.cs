@@ -73,13 +73,11 @@ public class FadeText : MonoBehaviour
 
     private IEnumerator EaseIn()
     {
-        Debug.Log("Inside in");
         return EaseInOut(true);
     }
 
     private IEnumerator EaseOut()
     {
-        Debug.Log("Inside out");
         return EaseInOut(false);
     }
 
