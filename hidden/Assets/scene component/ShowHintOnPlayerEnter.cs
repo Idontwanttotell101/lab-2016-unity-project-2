@@ -1,25 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(PlayerDetector))]
 public class ShowHintOnPlayerEnter : MonoBehaviour
 {
     public FadeText hint;
     public string text;
     // Update is called once per frame
-    void OnTriggerEnter(Collider c)
+    void OnPlayerEnter(Collider c)
     {
-        if (c.tag == "Player")
-        {
-            hint.Text = text;
-            hint.Show();
-        }
+        hint.Text = text;
+        hint.Show();
     }
 
-    void OnTriggerExit(Collider c)
+    void OnPlayerExit(Collider c)
     {
-        if (c.tag == "Player")
-        {
-            hint.Hide();
-        }
+        hint.Hide();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(PlayerDetector))]
 public class BridgeFallSwitch : MonoBehaviour
 {
     public KeyCode triggerCode = KeyCode.E;
@@ -17,14 +18,12 @@ public class BridgeFallSwitch : MonoBehaviour
             }
     }
 
-    void OnTriggerEnter(Collider c)
+    void OnPlayerEnter(Collider c)
     {
-        if (c.tag == "Player")
-            tracking.Add(c.gameObject);
-
+        tracking.Add(c.gameObject);
     }
 
-    void OnTriggerExit(Collider c)
+    void OnPlayerExit(Collider c)
     {
         tracking.Remove(c.gameObject);
     }
