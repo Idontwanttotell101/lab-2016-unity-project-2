@@ -3,9 +3,14 @@ using System.Collections;
 
 public class guardalert : MonoBehaviour
 {
-    public GameObject Player;
+
+    GameObject Player;
     public float minPlayerDetectDistance;
     public float fieldOfViewRange;
+
+    void Start() {
+        Player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     void Update()
     {

@@ -6,16 +6,22 @@ public class BridgeFallSwitch : MonoBehaviour
 {
     public KeyCode triggerCode = KeyCode.E;
     public List<GameObject> linkedItems;
-    public OffMeshLink link;
+	public List<OffMeshLink> links;
+	public List<GameObject> targets;
 
     void OnPlayerStay(Collider c)
     {
-        if (Input.GetKeyDown(triggerCode))
-            Destroy(link);
-            foreach (var i in linkedItems)
-            {
-                i.AddComponent<Rigidbody>();
-                i.GetComponent<Collider>().enabled = false;
-            }
+		if (Input.GetKeyDown (triggerCode)) {
+			foreach (var i in links) {
+				Destroy (i);
+			}
+			foreach (var i in targets) {
+				Destroy (i);
+			}
+			foreach (var i in linkedItems) {
+				i.AddComponent<Rigidbody> ();
+				i.GetComponent<Collider> ().enabled = false;
+			}
+		}
     }
 }

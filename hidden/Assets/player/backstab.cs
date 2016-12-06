@@ -12,10 +12,12 @@ public class backstab : MonoBehaviour
     // Update is called once per frame
     void OnTriggerStay(Collider c)
     {
-        if (c.tag == "Enemy")
+        if (c.tag == "EnemyBack")
         {
-            if (Input.GetMouseButtonDown(0))
-                Destroy(c.transform.parent.gameObject);
+			if (Input.GetMouseButtonDown (0)) {
+				c.transform.root.gameObject.GetComponent<dropitem> ().DropItem ();
+				Destroy (c.transform.parent.gameObject);
+			}
         }
     }
 }
