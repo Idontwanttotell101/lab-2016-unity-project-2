@@ -22,12 +22,11 @@ public class guardMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //try
-        
+        try
         {
             if (Vector3.Distance(transform.position, nextTarget.Current.position) > 1) return;
         }
-        //catch (MissingReferenceException)
+        catch (MissingReferenceException)
         {
             //move next
         }

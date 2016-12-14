@@ -20,10 +20,13 @@ public class TriggerLeaveDetector : MonoBehaviour
 
     void Update()
     {
-        if (inside) { counter = 0; return; }
+        if (inside) { counter = 0; inside = false; return; }
         ++counter;
-        if (counter > ThresholdFrame) OnGroundLeave.Invoke();
-        SendMessage(GroundLeaveMessage);
+        if (counter > ThresholdFrame)
+        {
+            OnGroundLeave.Invoke();
+            SendMessage(GroundLeaveMessage, SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     void OnTriggerStay(Collider c)
