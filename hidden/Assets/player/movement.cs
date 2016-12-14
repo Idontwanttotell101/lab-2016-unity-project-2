@@ -16,11 +16,6 @@ public class movement : MonoBehaviour {
 		rb = gameObject.GetComponent<Rigidbody> ();
 	}
 
-	void Start () 
-	{
-		
-	}
-
 	void FixedUpdate () 
 	{
 		float h = Input.GetAxis ("Horizontal");
@@ -28,8 +23,6 @@ public class movement : MonoBehaviour {
 		Move (h, v);
 		Turning ();
         Jump ();
-		//Animating (h, v);
-
 	}
 
 	void Move (float h, float v)
