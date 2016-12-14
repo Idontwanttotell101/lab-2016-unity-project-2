@@ -6,12 +6,6 @@ public class attack : MonoBehaviour {
     public GameObject Player;
     public GameObject firePoint;
     float shootRayLength = 100;
-
-
-    void Start ()
-    {
-        
-    }
 	
 	void Update ()
     {

@@ -24,19 +24,17 @@ public class guardalert : MonoBehaviour
         Vector3 rayDirection = Player.transform.position - transform.position;
         float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
         if (Vector3.Angle(rayDirection, transform.forward) < fieldOfViewRange)
-        { // Detect if player is within the field of view
-            Debug.Log("in the field");
+        { 
+            // Detect if player is within the field of view
             if (Physics.Raycast(transform.position, rayDirection, out hit, minPlayerDetectDistance))
             {
 
                 if (hit.transform.tag == "Player")
                 {
-                    Debug.Log("Can see player");
                     return true;
                 }
                 else
                 {
-                    Debug.Log("Can not see player");
                     return false;
                 }
             }

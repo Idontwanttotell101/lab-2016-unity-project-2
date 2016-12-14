@@ -4,10 +4,21 @@ using System.Collections;
 public class TooBelowDestroy : MonoBehaviour
 {
     public float limitY = -100;
-    // Update is called once per frame
-    void Update()
+    public float CleanUpDuration = 2000;
+
+    void Start()
     {
-        if (transform.position.y < limitY)
-            Destroy(this.gameObject);
+        InvokeRepeating("CleanUp", 0, CleanUpDuration);
+    }
+
+    // Update is called once per frame
+    void CleanUp()
+    {
+        var objects = GameObject.FindObjectsOfType<Transform>();
+        foreach (var o in objects)
+        {
+            if (o.position.y < limitY)
+                Destroy(o.gameObject);
+        }
     }
 }
