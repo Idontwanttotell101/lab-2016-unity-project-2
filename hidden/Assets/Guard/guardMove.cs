@@ -22,14 +22,20 @@ public class guardMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //try
-        
+        try
         {
             if (Vector3.Distance(transform.position, nextTarget.Current.position) > 1) return;
         }
-        //catch (MissingReferenceException)
+        catch (MissingReferenceException)
         {
             //move next
+            if (CheckPoints.Count(x => x != null) <= 1)
+            {
+                Debug.Log("no more avalible checkpoints to move to", this);
+                this.enabled = false;
+                agent.enabled = false;
+                return;
+            }
         }
         do nextTarget.MoveNext(); while (nextTarget.Current == null);
         agent.destination = nextTarget.Current.position;
