@@ -29,9 +29,14 @@ public class objectFall : MonoBehaviour
     private void Fall()
     {
         var components = target.GetComponentsInChildren<Component>();
-        foreach (var com in components.Where(x => !(x is Renderer || x is Transform)))
+        foreach (var com in components.Where(x => !(x is Renderer || x is Transform || x is objectFall)))
         {
-            GameObject.Destroy(com);
+            
+            if (com is Rigidbody) GameObject.DestroyImmediate(com);
+            if (com is Behaviour) (com as Behaviour).enabled = false;
+            else GameObject.Destroy(com);
+            
+            //GameObject.DestroyImmediate(com);
         }
         var rig = target.AddComponent<Rigidbody>();
     }
