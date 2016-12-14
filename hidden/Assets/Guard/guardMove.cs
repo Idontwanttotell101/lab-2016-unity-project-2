@@ -29,6 +29,13 @@ public class guardMove : MonoBehaviour
         catch (MissingReferenceException)
         {
             //move next
+            if (CheckPoints.Count(x => x != null) <= 1)
+            {
+                Debug.Log("no more avalible checkpoints to move to", this);
+                this.enabled = false;
+                agent.enabled = false;
+                return;
+            }
         }
         do nextTarget.MoveNext(); while (nextTarget.Current == null);
         agent.destination = nextTarget.Current.position;
