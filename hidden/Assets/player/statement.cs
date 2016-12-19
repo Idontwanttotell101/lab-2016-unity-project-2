@@ -4,7 +4,7 @@ using System.Collections;
 
 public class statement : MonoBehaviour {
 
-    public GameObject text;
+    public Text text;
     public int ammo = 0;
     public bool gotSecret = false;
 
@@ -15,6 +15,6 @@ public class statement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        text.GetComponent<Text>().text = "ammo:" + ammo.ToString();
+        text.text = "ammo:" + ammo.ToString();
     }
 }
