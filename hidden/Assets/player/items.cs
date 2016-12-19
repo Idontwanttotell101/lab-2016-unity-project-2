@@ -7,4 +7,9 @@ public class items : MonoBehaviour {
 
 	public bool havePistol = false;
 
+    public void PickUpPistol() {
+        havePistol = true;
+
+    }
+
 }
