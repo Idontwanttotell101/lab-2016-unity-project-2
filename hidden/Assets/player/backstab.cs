@@ -15,7 +15,6 @@ public class backstab : MonoBehaviour
         if (c.tag == "EnemyBack")
         {
 			if (Input.GetMouseButtonDown (0)) {
-				c.transform.root.gameObject.GetComponent<dropitem> ().DropItem ();
 				Destroy (c.transform.parent.gameObject);
 			}
         }

@@ -13,15 +13,6 @@ public class finish : MonoBehaviour {
         text.gameObject.SetActive(false);
     }
 
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
-
     void OnTriggerEnter(Collider c)
     {
         if (c.tag == "Player")

@@ -23,7 +23,12 @@ public class guardalert : MonoBehaviour
 
     void Update()
     {
-        if (alert){
+        var color = GetComponent<Renderer>().material.color;
+        color.r = 255 * alertValue / maxAlertValue;
+        GetComponent<Renderer>().material.color = color;
+        Player.GetComponent<statement>().alertRate = alertValue / maxAlertValue *100;
+        if (alert)
+        {
             alert = false;
             StopAllCoroutines();
             StartCoroutine("StartTrace");
@@ -47,7 +52,7 @@ public class guardalert : MonoBehaviour
 
     IEnumerator StartTrace()
     {
-        GetComponent<NavMeshAgent>().speed = 8;
+        GetComponent<NavMeshAgent>().speed = 6;
         GetComponent<NavMeshAgent>().acceleration = 100;
         GetComponent<guardMove>().enabled = false;
         while (true)
@@ -62,9 +67,11 @@ public class guardalert : MonoBehaviour
         while (true)
         {
             float distance = Vector3.Distance(transform.position, Player.transform.position);
-            alertValue += 10 * Mathf.Exp(-0.5f * distance) * Time.deltaTime;
+            alertValue += (15 * Mathf.Exp(-0.5f * distance) - alertDropDownRate) * Time.deltaTime;
+            if (alertValue < 0) alertValue = 0;
             if (alertValue > maxAlertValue)
             {
+                alertValue = maxAlertValue;
                 alert = true;
             }
             yield return null;
