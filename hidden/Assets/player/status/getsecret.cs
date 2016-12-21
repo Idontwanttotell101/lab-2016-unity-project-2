@@ -20,7 +20,7 @@ public class getsecret : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Player.GetComponent<statement>().gotSecret = true;
+                Player.GetComponent<status>().gotSecret = true;
             }
         }
     }

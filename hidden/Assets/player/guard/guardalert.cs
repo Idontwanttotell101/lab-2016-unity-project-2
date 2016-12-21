@@ -3,21 +3,21 @@ using System.Collections;
 
 public class guardalert : MonoBehaviour
 {
-
     GameObject Player;
+    GameObject GM;
     public float playerDetectDistance = 6;
     public float fieldOfViewRange = 60;
-    [SerializeField]
-    float alertValue = 0;
+    public float alertValue = 0;
     float maxAlertValue = 10;
     float alertDropDownRate = 1; //per second
     [SerializeField]
     Material alertMark;
 
-    bool alert = false;
+    public bool alert = false;
 
     void Start()
     {
+        GM = GameObject.FindGameObjectWithTag("GM");
         Player = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine("CanSeePlayer");
         StartCoroutine("SoundDetection");
@@ -28,12 +28,19 @@ public class guardalert : MonoBehaviour
         var color = GetComponent<Renderer>().material.color;
         color.r = 255 * alertValue / maxAlertValue;
         GetComponent<Renderer>().material.color = color;
-        Player.GetComponent<statement>().alertRate = alertValue / maxAlertValue *100;
+        GM.GetComponent<status>().alertRate = alertValue / maxAlertValue *100;
+        Debug.Log("status:" + alert);
         if (alert)
         {
-            alert = false;
+            //alert = false;
             StopAllCoroutines();
             StartCoroutine("StartTrace");
+        }
+        else {
+            StopAllCoroutines();
+            StopTrace();
+            StartCoroutine("CanSeePlayer");
+            StartCoroutine("SoundDetection");
         }
         alertMark.SetFloat("_TransparentRate", alertValue/10);
     }
@@ -44,10 +51,11 @@ public class guardalert : MonoBehaviour
         {
             RaycastHit hit;
             Vector3 rayDirection = Player.transform.position - transform.position;
-            float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
+            //float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
             if (Vector3.Angle(rayDirection, transform.forward) < fieldOfViewRange
                 && Physics.Raycast(transform.position, rayDirection, out hit, playerDetectDistance)
-                && hit.transform.tag == "Player")
+                && hit.transform.tag == "Player"
+                && GM.GetComponent<status>().atSafeZone != true)
             { alert = true; alertValue = 10; yield return null; }
             else { yield return null; }
         }
@@ -65,12 +73,20 @@ public class guardalert : MonoBehaviour
         }
     }
 
+    void StopTrace()
+    {
+        GetComponent<NavMeshAgent>().speed = 3.5f;
+        GetComponent<NavMeshAgent>().acceleration = 8;
+        GetComponent<guardMove>().enabled = true;
+    }
+
     IEnumerator SoundDetection()
     {
         while (true)
         {
             float distance = Vector3.Distance(transform.position, Player.transform.position);
-            alertValue += (15 * Mathf.Exp(-0.5f * distance) - alertDropDownRate) * Time.deltaTime;
+            if(GM.GetComponent<status>().atSafeZone != true)
+                alertValue += (15 * Mathf.Exp(-0.5f * distance) - alertDropDownRate) * Time.deltaTime;
             if (alertValue < 0) alertValue = 0;
             if (alertValue > maxAlertValue)
             {

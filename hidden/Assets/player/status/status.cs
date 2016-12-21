@@ -2,13 +2,14 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class statement : MonoBehaviour {
+public class status : MonoBehaviour {
 
     public Text text;
     public Text text2;
     public int ammo = 0;
     public bool gotSecret = false;
     public float alertRate = 0;
+    public bool atSafeZone = false;
 	
 	// Update is called once per frame
 	void Update () {

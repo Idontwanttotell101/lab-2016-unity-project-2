@@ -8,7 +8,7 @@ public class guardMove : MonoBehaviour
 
     public Transform[] CheckPoints;
     private NavMeshAgent agent;
-    IEnumerator<Transform> nextTarget;
+    public IEnumerator<Transform> nextTarget;
 
     // Use this for initialization
     void Start()
@@ -38,6 +38,11 @@ public class guardMove : MonoBehaviour
             }
         }
         do nextTarget.MoveNext(); while (nextTarget.Current == null);
+        agent.destination = nextTarget.Current.position;
+    }
+
+    public void NextOne() {
+        nextTarget.MoveNext();
         agent.destination = nextTarget.Current.position;
     }
 }

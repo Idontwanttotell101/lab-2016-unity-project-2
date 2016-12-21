@@ -3,7 +3,7 @@ using System.Collections;
 
 public class pistolShoot : MonoBehaviour {
 
-    public GameObject Player;
+    public GameObject GM;
     public GameObject firePoint;
     float shootRayLength = 100;
 	
@@ -17,8 +17,8 @@ public class pistolShoot : MonoBehaviour {
 
     void Shoot()
     {
-		if(Player.GetComponent<statement>().ammo > 0){
-            Player.GetComponent<statement>().ammo--;
+		if(GM.GetComponent<status>().ammo > 0){
+            GM.GetComponent<status>().ammo--;
 	        RaycastHit shootHit;
 	        Ray shootRay = new Ray();
 	        shootRay.origin = firePoint.transform.position;
