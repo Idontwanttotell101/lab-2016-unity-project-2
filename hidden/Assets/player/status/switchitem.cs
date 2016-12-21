@@ -6,9 +6,11 @@ public class switchitem : MonoBehaviour {
 
 	string currentActItem;
 	List<string> items;
+    GameObject Player;
 
 	void Awake()
 	{
+        Player = GameObject.FindGameObjectWithTag("Player");
 		items = new List<string>(){"knife","pistol"};
 		CurrentItem ("knife");
 	}
@@ -44,9 +46,9 @@ public class switchitem : MonoBehaviour {
 			currentActItem = needtoactive;
 			foreach (string element in items) 
 			{
-				transform.Find (element).gameObject.SetActive (false);
+				Player.transform.Find (element).gameObject.SetActive (false);
 			}
-			transform.Find (needtoactive).gameObject.SetActive (true);
+            Player.transform.Find (needtoactive).gameObject.SetActive (true);
 		}
 	}
 }

@@ -19,13 +19,13 @@ public class finish : MonoBehaviour {
         {
             if (secret != null)
             {
-                if (Player.GetComponent<statement>().gotSecret == true)
+                if (Player.GetComponent<status>().gotSecret == true)
                 {
                     text.gameObject.SetActive(true);
                 }
             }
             else {
-                if (Player.GetComponent<statement>().gotSecret == true)
+                if (Player.GetComponent<status>().gotSecret == true)
                 {
                     text.gameObject.SetActive(true);
                 }
