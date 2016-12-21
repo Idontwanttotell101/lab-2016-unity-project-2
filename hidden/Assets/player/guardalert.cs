@@ -11,6 +11,8 @@ public class guardalert : MonoBehaviour
     float alertValue = 0;
     float maxAlertValue = 10;
     float alertDropDownRate = 1; //per second
+    [SerializeField]
+    Material alertMark;
 
     bool alert = false;
 
@@ -33,6 +35,7 @@ public class guardalert : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine("StartTrace");
         }
+        alertMark.SetFloat("_TransparentRate", alertValue/10);
     }
 
     IEnumerator CanSeePlayer()
@@ -45,7 +48,7 @@ public class guardalert : MonoBehaviour
             if (Vector3.Angle(rayDirection, transform.forward) < fieldOfViewRange
                 && Physics.Raycast(transform.position, rayDirection, out hit, playerDetectDistance)
                 && hit.transform.tag == "Player")
-            { alert = true; yield return null; }
+            { alert = true; alertValue = 10; yield return null; }
             else { yield return null; }
         }
     }
