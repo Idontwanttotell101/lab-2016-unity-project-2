@@ -4,17 +4,15 @@ using System.Collections;
 
 public class statement : MonoBehaviour {
 
-    public GameObject text;
+    public Text text;
+    public Text text2;
     public int ammo = 0;
     public bool gotSecret = false;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
+    public float alertRate = 0;
 	
 	// Update is called once per frame
 	void Update () {
-        text.GetComponent<Text>().text = "ammo:" + ammo.ToString();
+        text.text = "ammo:" + ammo.ToString();
+        text2.text = "alert rate : " + alertRate.ToString();
     }
 }
