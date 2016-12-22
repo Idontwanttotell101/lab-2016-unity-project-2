@@ -12,7 +12,6 @@ public class cancelAlert : MonoBehaviour {
 
     void cancelAllSearch() {
         var objs = enemies;
-        enemies = new List<GameObject>();
 
         foreach (var obj in objs)
         {
