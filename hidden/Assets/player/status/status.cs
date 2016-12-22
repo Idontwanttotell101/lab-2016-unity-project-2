@@ -10,6 +10,7 @@ public class status : MonoBehaviour {
     public bool gotSecret = false;
     public float alertRate = 0;
     public bool atSafeZone = false;
+    public bool cankill = true;
 	
 	// Update is called once per frame
 	void Update () {

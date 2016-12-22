@@ -3,13 +3,17 @@ using System.Collections;
 
 public class pistolShoot : MonoBehaviour {
 
-    public GameObject GM;
+    status GM;
     public GameObject firePoint;
     float shootRayLength = 100;
+
+    void Awake() {
+        GM = GameObject.FindObjectOfType<status>();
+    }
 	
 	void Update ()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && GM.GetComponent<status>().cankill)
         {
             Shoot();
         }
@@ -17,8 +21,8 @@ public class pistolShoot : MonoBehaviour {
 
     void Shoot()
     {
-		if(GM.GetComponent<status>().ammo > 0){
-            GM.GetComponent<status>().ammo--;
+		if(GM.ammo > 0){
+            GM.ammo--;
 	        RaycastHit shootHit;
 	        Ray shootRay = new Ray();
 	        shootRay.origin = firePoint.transform.position;

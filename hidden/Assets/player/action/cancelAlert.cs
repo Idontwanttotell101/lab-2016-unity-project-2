@@ -25,6 +25,7 @@ public class cancelAlert : MonoBehaviour {
         if(c.tag == "Player")
         {
             GM.GetComponent<status>().atSafeZone = true;
+            GM.GetComponent<status>().cankill = false;
             cancelAllSearch();
         }
     }
@@ -32,6 +33,7 @@ public class cancelAlert : MonoBehaviour {
     void OnTriggerExit(Collider c) {
         if (c.tag == "Player") {
             GM.GetComponent<status>().atSafeZone = false;
+            GM.GetComponent<status>().cankill = true;
         }
     }
 }
