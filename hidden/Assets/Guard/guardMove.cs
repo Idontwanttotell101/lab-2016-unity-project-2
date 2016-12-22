@@ -24,6 +24,7 @@ public class guardMove : MonoBehaviour
     {
         try
         {
+            agent.destination = nextTarget.Current.position;
             if (Vector3.Distance(transform.position, nextTarget.Current.position) > 1) return;
         }
         catch (MissingReferenceException)
@@ -38,11 +39,6 @@ public class guardMove : MonoBehaviour
             }
         }
         do nextTarget.MoveNext(); while (nextTarget.Current == null);
-        agent.destination = nextTarget.Current.position;
-    }
-
-    public void NextOne() {
-        nextTarget.MoveNext();
         agent.destination = nextTarget.Current.position;
     }
 }

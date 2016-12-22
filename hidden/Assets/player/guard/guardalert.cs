@@ -3,105 +3,112 @@ using System.Collections;
 
 public class guardalert : MonoBehaviour
 {
-    GameObject Player;
-    GameObject GM;
+    Player Player;
+    status GM;
     public float playerDetectDistance = 6;
     public float fieldOfViewRange = 60;
-    public float alertValue = 0;
+    public float _alertValue = 0;
+    private float AlertValue
+    {
+        get
+        {
+            return _alertValue;
+        }
+        set
+        {
+            _alertValue = Mathf.Clamp(value, 0, maxAlertValue);
+        }
+    }
     float maxAlertValue = 10;
     float alertDropDownRate = 1; //per second
     [SerializeField]
     Material alertMark;
 
-    public bool alert = false;
-
     void Start()
     {
-        GM = GameObject.FindGameObjectWithTag("GM");
-        Player = GameObject.FindGameObjectWithTag("Player");
-        StartCoroutine("CanSeePlayer");
-        StartCoroutine("SoundDetection");
+        GM = GameObject.FindObjectOfType<status>();
+        Player = GameObject.FindObjectOfType<Player>();
+        StartCoroutine(CanSeePlayer());
+        StartCoroutine(SoundDetection());
     }
 
     void Update()
     {
-        var color = GetComponent<Renderer>().material.color;
-        color.r = 255 * alertValue / maxAlertValue;
-        GetComponent<Renderer>().material.color = color;
-        GM.GetComponent<status>().alertRate = alertValue / maxAlertValue *100;
-        Debug.Log("status:" + alert);
-        if (alert)
-        {
-            //alert = false;
-            StopAllCoroutines();
-            StartCoroutine("StartTrace");
-        }
-        else {
-            StopAllCoroutines();
-            StopTrace();
-            StartCoroutine("CanSeePlayer");
-            StartCoroutine("SoundDetection");
-        }
-        alertMark.SetFloat("_TransparentRate", alertValue/10);
+        GM.alertRate = AlertValue / maxAlertValue * 100;
+        alertMark.SetFloat("_TransparentRate", AlertValue / 10);
     }
 
     IEnumerator CanSeePlayer()
     {
+        yield return null;
         while (true)
         {
+            Debug.Log("See");
             RaycastHit hit;
             Vector3 rayDirection = Player.transform.position - transform.position;
             //float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
             if (Vector3.Angle(rayDirection, transform.forward) < fieldOfViewRange
                 && Physics.Raycast(transform.position, rayDirection, out hit, playerDetectDistance)
                 && hit.transform.tag == "Player"
-                && GM.GetComponent<status>().atSafeZone != true)
-            { alert = true; alertValue = 10; yield return null; }
+                && !Player.Hidden)
+            { StartTrace(); yield return null; }
             else { yield return null; }
         }
     }
 
-    IEnumerator StartTrace()
+    void StartTrace()
     {
-        GetComponent<NavMeshAgent>().speed = 6;
-        GetComponent<NavMeshAgent>().acceleration = 100;
-        GetComponent<guardMove>().enabled = false;
-        while (true)
-        {
-            GetComponent<NavMeshAgent>().destination = Player.transform.position;
-            yield return null;
-        }
+        StopAllCoroutines();
+        StartCoroutine(TraceRoutine());
     }
 
     void StopTrace()
     {
+        StopAllCoroutines();
+        StartCoroutine(CanSeePlayer());
+        StartCoroutine(SoundDetection());
         GetComponent<NavMeshAgent>().speed = 3.5f;
         GetComponent<NavMeshAgent>().acceleration = 8;
         GetComponent<guardMove>().enabled = true;
     }
 
-    IEnumerator SoundDetection()
+    IEnumerator TraceRoutine()
     {
+        yield return null;
+        GetComponent<NavMeshAgent>().speed = 6;
+        GetComponent<NavMeshAgent>().acceleration = 100;
+        GetComponent<guardMove>().enabled = false;
         while (true)
         {
-            float distance = Vector3.Distance(transform.position, Player.transform.position);
-            if(GM.GetComponent<status>().atSafeZone != true)
-                alertValue += (15 * Mathf.Exp(-0.5f * distance) - alertDropDownRate) * Time.deltaTime;
-            if (alertValue < 0) alertValue = 0;
-            if (alertValue > maxAlertValue)
+            Debug.Log("Trace");
+            if (Player.Hidden)
             {
-                alertValue = maxAlertValue;
-                alert = true;
+                AlertValue -= alertDropDownRate * Time.deltaTime;
+                if (AlertValue == 0)
+                    StopTrace();
+            }
+            else
+            {
+                AlertValue = Mathf.Infinity;
+                GetComponent<NavMeshAgent>().destination = Player.transform.position;
             }
             yield return null;
         }
     }
 
-    private IEnumerator WaitAndPrint(float waitTime)
+    IEnumerator SoundDetection()
     {
+        yield return null;
         while (true)
         {
-            yield return new WaitForSeconds(waitTime);
+            Debug.Log("Detection");
+            float distance = Vector3.Distance(transform.position, Player.transform.position);
+            if (Player.Hidden) distance = Mathf.Infinity;
+            AlertValue += (15 * Mathf.Exp(-0.5f * distance) - alertDropDownRate) * Time.deltaTime;
+
+            if (AlertValue == maxAlertValue)
+                StartTrace();
+            yield return null;
         }
     }
 }
