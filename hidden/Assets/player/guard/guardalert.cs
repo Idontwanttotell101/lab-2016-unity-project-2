@@ -24,13 +24,13 @@ public class guardalert : MonoBehaviour
     [SerializeField]
     Material alertMark;
 
-    NavMeshAgent agent;
+    UnityEngine.AI.NavMeshAgent agent;
 
     void Start()
     {
         GM = GameObject.FindObjectOfType<status>();
         Player = GameObject.FindObjectOfType<Player>();
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         StartCoroutine(CanSeePlayer());
         StartCoroutine(SoundDetection());
     }
@@ -70,16 +70,16 @@ public class guardalert : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(CanSeePlayer());
         StartCoroutine(SoundDetection());
-        GetComponent<NavMeshAgent>().speed = 3.5f;
-        GetComponent<NavMeshAgent>().acceleration = 8;
+        GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 3.5f;
+        GetComponent<UnityEngine.AI.NavMeshAgent>().acceleration = 8;
         GetComponent<guardMove>().enabled = true;
     }
 
     IEnumerator TraceRoutine()
     {
         yield return null;
-        GetComponent<NavMeshAgent>().speed = 6;
-        GetComponent<NavMeshAgent>().acceleration = 100;
+        GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 6;
+        GetComponent<UnityEngine.AI.NavMeshAgent>().acceleration = 100;
         GetComponent<guardMove>().enabled = false;
         while (true)
         {

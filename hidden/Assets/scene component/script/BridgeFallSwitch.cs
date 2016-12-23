@@ -6,7 +6,7 @@ public class BridgeFallSwitch : MonoBehaviour
 {
     public KeyCode triggerCode = KeyCode.E;
     public List<GameObject> linkedItems;
-	public List<OffMeshLink> links;
+	public List<UnityEngine.AI.OffMeshLink> links;
 	public List<GameObject> targets;
 
     void OnPlayerStay(Collider c)

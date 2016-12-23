@@ -7,13 +7,13 @@ public class guardMove : MonoBehaviour
 {
 
     public Transform[] CheckPoints;
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     public IEnumerator<Transform> nextTarget;
 
     // Use this for initialization
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         nextTarget = CheckPoints.InfinityRepeat().GetEnumerator();
         nextTarget.MoveNext();
         agent.destination = nextTarget.Current.position;

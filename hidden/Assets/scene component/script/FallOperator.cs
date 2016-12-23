@@ -11,6 +11,6 @@ public class FallOperator : MonoBehaviour
             if (com is Rigidbody) GameObject.DestroyImmediate(com);
             else GameObject.Destroy(com);
         }
-        var rig = gameObject.AddComponent<Rigidbody>();
+        gameObject.AddComponent<Rigidbody>();
     }
 }

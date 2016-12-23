@@ -7,6 +7,6 @@ public class SetAsTarget : MonoBehaviour
     // Use this for initialization
     void OnMouseDown()
     {
-        FindObjectOfType<NavMeshAgent>().destination = this.transform.position;
+        FindObjectOfType<UnityEngine.AI.NavMeshAgent>().destination = this.transform.position;
     }
 }
