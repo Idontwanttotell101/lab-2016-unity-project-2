@@ -31,7 +31,7 @@ public class pistolShoot : MonoBehaviour {
 	        if (Physics.Raycast(shootRay, out shootHit, shootRayLength))
 	        {
 				if (shootHit.transform.tag == "Enemy") {
-					Destroy (shootHit.transform.gameObject);
+					Destroy (shootHit.transform.gameObject,0.01f);
 				}
 	        }
 
