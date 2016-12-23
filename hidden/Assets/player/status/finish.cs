@@ -4,13 +4,14 @@ using System.Collections;
 
 public class finish : MonoBehaviour {
 
-    public GameObject Player;
+    status GM;
     public GameObject secret;
     public GameObject text;
     // Use this for initialization
 
     void Awake() {
         text.gameObject.SetActive(false);
+        GM = GameObject.FindObjectOfType<status>();
     }
 
     void OnTriggerEnter(Collider c)
@@ -19,13 +20,13 @@ public class finish : MonoBehaviour {
         {
             if (secret != null)
             {
-                if (Player.GetComponent<status>().gotSecret == true)
+                if (GM.gotSecret == true)
                 {
                     text.gameObject.SetActive(true);
                 }
             }
             else {
-                if (Player.GetComponent<status>().gotSecret == true)
+                if (GM.gotSecret == true)
                 {
                     text.gameObject.SetActive(true);
                 }

@@ -3,10 +3,10 @@ using System.Collections;
 
 public class getsecret : MonoBehaviour {
 
-    public GameObject Player;
+    status GM;
 	// Use this for initialization
 	void Start () {
-	
+        GM = GameObject.FindObjectOfType<status>();
 	}
 	
 	// Update is called once per frame
@@ -20,7 +20,7 @@ public class getsecret : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Player.GetComponent<status>().gotSecret = true;
+                GM.gotSecret = true;
             }
         }
     }
