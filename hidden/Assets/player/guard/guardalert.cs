@@ -24,10 +24,13 @@ public class guardalert : MonoBehaviour
     [SerializeField]
     Material alertMark;
 
+    NavMeshAgent agent;
+
     void Start()
     {
         GM = GameObject.FindObjectOfType<status>();
         Player = GameObject.FindObjectOfType<Player>();
+        agent = GetComponent<NavMeshAgent>();
         StartCoroutine(CanSeePlayer());
         StartCoroutine(SoundDetection());
     }
@@ -90,7 +93,7 @@ public class guardalert : MonoBehaviour
             else
             {
                 AlertValue = Mathf.Infinity;
-                GetComponent<NavMeshAgent>().destination = Player.transform.position;
+                agent.destination = Player.transform.position;
             }
             yield return null;
         }
